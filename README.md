@@ -1,3 +1,3 @@
 #local-weather
 
-Part of [Free Code Camp](www.freecodecamp.com)
+Part of [Free Code Camp](https://www.freecodecamp.com)
