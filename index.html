@@ -10,20 +10,35 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <script>
-  $(document).ready(function() {
-    $("#showWeather").on("click", function(){
-      $.ajax({
-        dataType: 'json',
-        // url:'http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=xml&lang=en',
-        url:'http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=d5c5a4658f2c0dc6c1150ebda16b2d28&units=metric',
-        cache: false,
-        success: function(json) {
-          $('#weatherJson').html(json.main.temp_min);
-          console.log(json);
+    $(document).ready(function() {
+      var lat;
+      var long;
+      $("#showWeather").on("click", function(){
+
+        if ("geolocation" in navigator){ //check geolocation available
+            navigator.geolocation.getCurrentPosition(function(position){
+              lat=position.coords.latitude;
+              console.log(lat);
+              long=position.coords.longitude;
+              console.log(long);
+              $.ajax({
+                dataType: 'json',
+                url:'http://api.openweathermap.org/data/2.5/weather?&appid=d5c5a4658f2c0dc6c1150ebda16b2d28&units=metric&lat='+lat+'&lon='+long,
+                cache: false,
+                success: function(json) {
+                  $('#name').html(json.name);
+                  $('#weather-main').html(json.weather[0].main);
+                  $('#main-temp').html(json.main.temp + " C");
+                  $('#main-humidity').html(json.main.humidity + "%");
+                  console.log(json);
+                  }
+                });
+              });
+        } else{
+            console.log("Browser doesn't support geolocation!");
         }
       });
     });
-  });
   </script>
 </head>
 
@@ -31,8 +46,10 @@
   <div class="container">
     <div id="showWeather" class="row">
       <button class="btn btn-primary">Show Weather</button>
-    </div>
-    <div id ="weatherJson">
+      <div id ="name"></div>
+      <div id ="weather-main"></div>
+      <div id ="main-temp"></div>
+      <div id ="main-humidity"></div>
     </div>
   </div>
 </body>
