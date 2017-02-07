@@ -21,19 +21,14 @@
               console.log(lat);
               long=position.coords.longitude;
               console.log(long);
-              $.ajax({
-                dataType: 'json',
-                url:'http://api.openweathermap.org/data/2.5/weather?&appid=d5c5a4658f2c0dc6c1150ebda16b2d28&units=metric&lat='+lat+'&lon='+long,
-                cache: false,
-                success: function(json) {
-                  $('#name').html(json.name);
-                  $('#weather-main').html(json.weather[0].main);
-                  $('#main-temp').html(json.main.temp + " C");
-                  $('#main-humidity').html(json.main.humidity + "%");
-                  console.log(json);
-                  }
-                });
+              $.getJSON('https://api.forecast.io/forecast/e07fdce24bb3337313ce3a131327d614/' + lat + ',' + long + "?units=si&callback=?", function(data1) {
+                console.log(data1.currently.summary);
+                $('#name').html(data1.timezone);
+                $('#weather-main').html(data1.currently.summary);
+                $('#main-temp').html(data1.currently.temperature + " C");
+                $('#main-humidity').html(data1.currently.humidity + "%");
               });
+            });
         } else{
             console.log("Browser doesn't support geolocation!");
         }
