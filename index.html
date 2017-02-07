@@ -1,0 +1,40 @@
+
+<html lang="en">
+<head>
+  <title>Weather</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script>
+  $(document).ready(function() {
+    $("#showWeather").on("click", function(){
+      $.ajax({
+        dataType: 'json',
+        // url:'http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=xml&lang=en',
+        url:'http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=d5c5a4658f2c0dc6c1150ebda16b2d28&units=metric',
+        cache: false,
+        success: function(json) {
+          $('#weatherJson').html(json.main.temp_min);
+          console.log(json);
+        }
+      });
+    });
+  });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div id="showWeather" class="row">
+      <button class="btn btn-primary">Show Weather</button>
+    </div>
+    <div id ="weatherJson">
+    </div>
+  </div>
+</body>
+
+</html>
