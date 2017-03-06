@@ -1,83 +1,43 @@
-
 <html lang="en">
-<head>
-  <title>Weather</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/weather-icons-wind.css">
-  <link rel="stylesheet" href="css/weather-icons-wind.min.css">
-  <link rel="stylesheet" href="css/weather-icons.css">
-  <link rel="stylesheet" href="css/weather-icons.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <script>
-  var toggle = 0;
-  var tempInC;
-  var tempInF;
-  
-    $(document).ready(function() {
-      var lat;
-      var long;
+  <head>
+    <title>Local Weather</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/weather-icons-wind.css">
+    <link rel="stylesheet" href="css/weather-icons-wind.min.css">
+    <link rel="stylesheet" href="css/weather-icons.css">
+    <link rel="stylesheet" href="css/weather-icons.min.css">
+    <link rel="stylesheet" href="css/local_weather.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src = "script.js"></script>
+  </head>
 
-
-        if ("geolocation" in navigator){ //check geolocation available
-            navigator.geolocation.getCurrentPosition(function(position){
-              lat=position.coords.latitude;
-              console.log(lat);
-              long=position.coords.longitude;
-              console.log(long);
-              $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&location_type=ROOFTOP&result_type=street_address&key=AIzaSyBROovJeeV1tRUF3M48jgHk7Y__-7ToPpg', function(data1){
-                console.log(data1);
-                $('#name').html(data1.results[0].address_components[3].long_name);
-
-              })
-              $.getJSON('https://api.forecast.io/forecast/e07fdce24bb3337313ce3a131327d614/' + lat + ',' + long + "?units=si&callback=?", function(data1) {
-                console.log(data1.currently.summary);
-                console.log('https://api.forecast.io/forecast/e07fdce24bb3337313ce3a131327d614/' + lat + ',' + long + '?units=si');
-                $('#weather-main').html(data1.currently.icon);
-                tempInC = parseInt(data1.currently.temperature);
-                $('#main-temp').html(tempInC + " C");
-                $('#main-humidity').html(data1.currently.humidity + "%");
-                var iconString = "wi wi-forecast-io-" + data1.currently.icon;
-                console.log(iconString);
-                $('#weather-icon').html('<i class="'+iconString+'"></i>')
-              });
-
-            });
-        } else{
-            console.log("Browser doesn't support geolocation!");
-        }
-    });
-
-    function toggleUnits(){
-      if (toggle % 2 == 0){
-        tempInF = (9/5*tempInC) + 32;
-        $('#main-temp').html(tempInF + " F");
-        toggle+=1;
-      }
-      else{
-        $('#main-temp').html(tempInC + " C");
-        toggle+=1;
-      }
-    }
-
-  </script>
-</head>
-
-<body>
-  <div class="container">
-    <div id="showWeather" class="row">
-      <button class="btn btn-primary" onclick="toggleUnits()">Toggle Units</button>
-      <div id ="name"></div>
-      <div id ="weather-main"></div>
-      <div id ="main-temp"></div>
-      <div id ="main-humidity"></div>
-      <div id ="weather-icon"></div>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Local Weather</h1>
+      <div class="image">
+        <img class="image" style="opacity:.4">
+      </div>
+      <div id="weather-block">
+        <div id ="main-temp"></div>
+        <div id ="main-humidity"></div>
+        <div id ="summary"></div>
+      </div>
+      <div id="weather-icon-block">
+        <div id ="weather-icon"></div>
+      </div>
+      <div id="temp-toggle" class="text-center" style="display:none">
+        <button class="btn btn-primary disabled" id = "celsius_btn" onclick="convertToC()">Celsius</button>
+        <button class="btn btn-primary" id = "fahrenheit_btn" onclick="convertToF()">Fahrenheit</button>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 
 </html>
+
+
+

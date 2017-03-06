@@ -1,0 +1,40 @@
+.image {
+    position: relative;
+    display:block;
+    margin-top:30px;
+    margin-right:auto;
+    margin-left:auto
+}
+
+#temp-toggle{
+    position: relative;
+    margin-top:20px;
+}
+
+#weather-block {
+    position: absolute;
+    top:120px;
+    right: 20%;
+    width: 100%;
+    text-align:right;
+    opacity: 0.8;
+}
+
+#weather-icon-block{
+    position: absolute;
+    top:140px;
+    left: 20%;
+    width: 100%;
+    text-align:left;
+    opacity: 0.8;
+}
+
+#main-temp{
+    font-size: 96pt;
+}
+
+.wi {
+    width: 24px !important;
+    height: 24px !important;
+}
+
